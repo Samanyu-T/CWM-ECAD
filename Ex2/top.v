@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Exercise #2 - Doorbell Chime
-// Student Name:
-// Date: 
+// Student Name: Anirvinya Tirumala
+// Date: 24/05/2021
 //
 //  Description: In this exercise, you need to design a multiplexer that chooses between two sounds, where the  
 //  output is delayed by 5 ticks (not clocks!) and acts according to the following truth table:
