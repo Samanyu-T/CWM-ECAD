@@ -20,10 +20,10 @@ module tempmonitor (
   input clk,temperature[4:0],
 	output heating, cooling
     );
-  wire heating
-  wire cooling
+  wire heating;
+  wire cooling;
   //apply the conditions to determine whether cooling or heating is required
-  initial 
+  always @(posedge clk) 
     begin 
       //if too cold apply heating
       if (temperature <= 5'd18)
