@@ -29,41 +29,52 @@ end
 
 //Todo: User logic
 initial begin
+ $display("Test");
  assign change = 1; 
  assign rst = 0;
  assign on_off = 1;
 
 forever
-//Increment the counter every clock cycle
- cycle_count <= cycle_count + 1;
-// increment up to 127 and then back down to 111
- if (cycle_count == 8'h7F)
-	assign on_off = ~on_off;
-//Now apply a reset
- else if (cycle_count == 8'h8F)
-	assign rst <=1;
-//Now count backwards from zero to test the looping
- else if (cycle_count == 8'h9F)
-	assign rst <= 0
-	assign on_off <= 0;
-//Now test if the value can remain constant
- else if (cycle_count == 8'hAF)
-	assign change <= 0
-
+	begin
+	//Increment the counter every clock cycle
+	 cycle_count = cycle_count + 1;
+	// increment up to 127 and then back down to 111
+	 if (cycle_count == 8'h7F)
+		assign on_off = ~on_off;
+	//Now apply a reset
+	 else if (cycle_count == 8'h8F)
+		assign rst = 1;
+	//Now count backwards from zero to test the looping
+	 else if (cycle_count == 8'h9F)
+		begin
+		assign rst = 0;
+		assign on_off = 0;
+		end
+	//Now test if the value can remain constant
+	 else if (cycle_count == 8'hAF)
+		assign change = 0;
+	end
 end
 
 //Todo: Finish test, check for success
 initial begin
 //Check the final Value should be a value slightly less than FF
+
  if (cycle_count == 8'hFF) 
+	begin
 	$display("End Result = %d",counter_out);
 	$finish;
+ 	end
 //Check the intermediary value 1 should be 112
  else if (cycle_count == 8'h8E)
+	begin 
 	$display("Intermediary value 1 = %d",counter_out);
+	end
 //Check the intermediary value 2 should be 0
  else if (cycle_count == 8'h9E)
+	begin
 	$display("Intermediary value 2 = %d",counter_out);
+	end
 
 end
 
