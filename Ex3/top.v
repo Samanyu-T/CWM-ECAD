@@ -34,7 +34,7 @@ module monitor (
 	begin
 //This if statement will reset to 0 when rst == 1 or when there will be overflow
 //It will also allow the counter to travel from 00 to FF.
-	    if  ( ((counter_out == 8'hFF) && on_off == 1) +  (rst) )
+	    if  ( ((counter_out == 8'hFF) && on_off == 1) || (rst) )
  		counter_out <= 8'h00;
 	    else if ( (counter_out == 8'h00) && (on_off == 0) ) 
 		counter_out <= 8'hFF;
