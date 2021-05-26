@@ -25,7 +25,6 @@ module monitor (
     );
                     
     //Todo: add registers and wires, if needed
-	reg [7:0]counter_out;
 
     //Todo: add user logic
 
