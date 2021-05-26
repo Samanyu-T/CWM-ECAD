@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Exercise #4 - Dynamic LED lights
-// Student Name: Anirvinya Tirumala
+// Student Name:
 // Date: 
 //
 //  Description: In this exercise, you need to design a LED based lighting solution, 
@@ -18,28 +18,30 @@
 
 `timescale 1ns / 100ps
 
-module lightcontroller (
-//add input and output ports
-  input clk,rst,button,
-  output reg [2,0]colour
+module lightcontrol (
+    //Todo: add ports 
+	input clk,rst,button,initial_colour,
+  	output reg [2:0]colour
     );
- //add registers and wires
-  reg [2,0]colour;
+                    
  
- //at a positive button edge and a positive clock signal 
+  initial 
+  colour <= initial_colour;
+    //Todo: add user logic
   always @(posedge clk)
-    begin 
-      if (button == 1)
-        begin
-  //If colour is in 0 or 7 then change it to 1      
-        if ((colour == 3'b000) or (colour == 3'b111))
-          colour = 2'b001 ;
-  //If colour is 
-        else
-          colour = colour + 1 ;
-        end
-      else
-        colour = colour;
-     end
-      
+    begin
+   // if the colour is out of bounds or rst is on then set to 1
+    if ((colour == 3'b000) || (colour == 3'b111) || (rst == 1))
+      colour = 3'b001;
+    else
+      begin
+   // if button is on then increase the colour
+       if (button == 1)
+         colour = colour + 1;
+       else
+    // if the button is off then keep the colour constant
+         colour = colour;
+      end
     end
+endmodule
+ 
