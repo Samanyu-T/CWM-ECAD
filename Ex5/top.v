@@ -23,8 +23,10 @@ module tempmonitor (
   wire heating;
   wire cooling;
   //apply the conditions to determine whether cooling or heating is required
-  always @(posedge clk) 
+ initial
     begin 
+      assign heating = initial_heating;
+      assign cooling = initial_cooling;
       //if too cold apply heating
       if (temperature <= 5'd18)
         begin
@@ -37,11 +39,29 @@ module tempmonitor (
           assign heating = 0;
           assign cooling = 1;
         end
-      // if neither do nothing
-      else
+      // if temperature in the ideal state 
+      else if ((temperature <= 5'd22) && (temperature >= 5'd18))
         begin 
-          assign heating = 0;
-          assign cooling = 0;
-        end 
+		// If heating is already on and the temperature is on the low side keep it on
+		if ((heating) && (temperature < 5'd20))
+			begin
+			  heating = 1;
+		          cooling = 0
+			end
+		// If cooling is already and the temperature is on the high side keep it on
+		else if ( (cooling) && (temperature > 5'd20) )
+			begin
+		          heating = 0;
+			  cooling = 1;
+			end
+		else
+	        // If it is in ideal temp and one of the other states turn off heating and cooling
+	           begin
+		          heating = 0;
+			  cooling = 0;
+	           end
+	end
+	    
+
     end
 endmodule 
