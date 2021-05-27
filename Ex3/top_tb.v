@@ -41,7 +41,7 @@ initial begin
 forever
 	begin
 	#(clk_time-6)
-	$displa
+	$display("cycle_count %d and counter %d",cycle_count, counter_out);
 	// increment up to 127 and then back down to 111
 	 if (cycle_count == 4'h5)
 		 on_off = ~on_off;
