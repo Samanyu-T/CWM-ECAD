@@ -16,8 +16,6 @@
 //           counter_out[7:0]
 //////////////////////////////////////////////////////////////////////////////////
 
-`timescale 1ns / 100ps
-
 module monitor (
     //Todo: add ports 
 	input clk,rst,change, on_off,
