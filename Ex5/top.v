@@ -17,7 +17,8 @@
 
 module tempmonitor (
     //Todo: add ports 
-  input clk,temperature[4:0],
+	input clk,temperature[4:0],initial_heating, intial_cooling,
+	
 	output heating, cooling
     );
   wire heating;
