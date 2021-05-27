@@ -12,53 +12,54 @@
 //  outputs:
 //           heating, cooling
 //////////////////////////////////////////////////////////////////////////////////
-
-
 module tempmonitor (
     //Todo: add ports 
-	input clk,temperature[4:0],initial_heating, intial_cooling,
+        input [4:0] temperature,
+        input clk,
+        input initial_heating,
+        input initial_cooling,
 	
-	output heating, cooling
+	output reg heating,
+        output reg cooling
     );
-  wire heating;
-  wire cooling;
+
   //apply the conditions to determine whether cooling or heating is required
  initial
     begin 
-      assign heating = initial_heating;
-      assign cooling = initial_cooling;
+      heating = initial_heating;
+      cooling = initial_cooling;
       //if too cold apply heating
       if (temperature <= 5'd18)
         begin
-          assign heating = 1;
-          assign cooling = 0;
+          heating = 1'b1;
+          cooling = 1'b0;
         end
       // if too hot apply cooling
       else if (temperature >= 5'd22)
         begin
-          assign heating = 0;
-          assign cooling = 1;
+          heating = 1'b0;
+          cooling = 1'b1;
         end
       // if temperature in the ideal state 
-      else if ((temperature <= 5'd22) && (temperature >= 5'd18))
+      else
         begin 
 		// If heating is already on and the temperature is on the low side keep it on
-		if ((heating) && (temperature < 5'd20))
+		if ((heating == 1'b1) && (temperature < 5'd20))
 			begin
-			  heating = 1;
-		          cooling = 0
+			  heating = 1'b1;
+		          cooling = 1'b0;
 			end
 		// If cooling is already and the temperature is on the high side keep it on
-		else if ( (cooling) && (temperature > 5'd20) )
+		else if ( (cooling == 1'b1) && (temperature > 5'd20) )
 			begin
-		          heating = 0;
-			  cooling = 1;
+		          heating = 1'b0;
+			  cooling = 1'b1;
 			end
 		else
 	        // If it is in ideal temp and one of the other states turn off heating and cooling
 	           begin
-		          heating = 0;
-			  cooling = 0;
+		          heating = 1'b0;
+			  cooling = 1'b0;
 	           end
 	end
 	    
