@@ -32,54 +32,50 @@ end
 
 //Todo: User logic
 initial begin
- $display("Test");
- assign cycle_count = 4'h0;
- assign change = 1; 
- assign rst = 0;
- assign on_off = 1;
-
+ $display("Test Start"); 
+ cycle_count = 4'h0;
+ change = 1'b1; 
+ rst = 1'b0;
+ on_off = 1'b1;
+ #6
 forever
 	begin
-
+	#(clk_time-6)
+	$displa
 	// increment up to 127 and then back down to 111
 	 if (cycle_count == 4'h5)
-		assign on_off = ~on_off;
+		 on_off = ~on_off;
 	//Now apply a reset
 	 else if (cycle_count == 4'h8)
-		assign rst = 1;
+		 rst = 1;
 	//Now count backwards from zero to test the looping
 	 else if (cycle_count == 4'hB)
 		begin
-		assign rst = 0;
-		assign on_off = 0;
+		 rst = 1'b0;
+		 on_off = 1'b0;
 		end
 	//Now test if the value can remain constant
 	 else if (cycle_count == 4'hD)
-		assign change = 0;
+		 change = 1'b0;
+	//Display the Counters at each of the critical points
+	 else if (cycle_count == 4'hF) 
+		begin
+		$display("End Result = %d",counter_out);
+		$finish;
+	 	end
+	//Check the intermediary value 1 should be 112
+	 else if (cycle_count == 4'h9)
+		begin 
+		$display("Intermediary value 1 = %d",counter_out);
+		end
+	//Check the intermediary value 2 should be 0
+	 else if (cycle_count == 4'hC)
+		begin
+		$display("Intermediary value 2 = %d",counter_out);
+		end
 	end
 end
 
-//Todo: Finish test, check for success
-initial begin
-//Check the final Value should be a value slightly less than FF
-
- if (cycle_count == 4'hF) 
-	begin
-	$display("End Result = %d",counter_out);
-	$finish;
- 	end
-//Check the intermediary value 1 should be 112
- else if (cycle_count == 4'h9)
-	begin 
-	$display("Intermediary value 1 = %d",counter_out);
-	end
-//Check the intermediary value 2 should be 0
- else if (cycle_count == 4'hC)
-	begin
-	$display("Intermediary value 2 = %d",counter_out);
-	end
-
-end
 
 //Todo: Instantiate counter module
 monitor top(.clk(clk), .rst(rst), .change(change), .on_off(on_off),.counter_out(counter_out));
