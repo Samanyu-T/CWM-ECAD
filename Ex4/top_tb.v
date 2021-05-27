@@ -16,11 +16,11 @@ module top_tb(
 parameter clk_time = 10; //set the clock period
 
 //Todo: Registers and wires
-reg clk, rst, button, cycle_count, initial_colour ;
+reg clk, rst, button, cycle_count ;
 
 //Todo: Clock generation
 initial begin 
- clk=0;
+ clk=1'b0;
  forever
    begin
    #(clk_time/2) clk=~clk;
@@ -32,12 +32,9 @@ end
 initial begin
  $display("Test");
 //Hold the button down to loop
- assign button = 1; 
- assign rst = 0;
-//make the initial colour out of bounds
- assign initial_colour = 3'd0;
- assign cycle_count = 4'h0;
- 
+  button = 1; 
+  rst = 0;
+  cycle_count = 4'h0;
 
 forever
   begin
@@ -61,5 +58,5 @@ forever
   end
 end
 	 
-lightcontrol top(.clk(clk), .rst(rst), .button(button),.initial_colour(initial_colour),.colour(colour));
+lightcontrol top(.clk(clk), .rst(rst), .button(button),.colour(colour));
 endmodule 
