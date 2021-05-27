@@ -16,7 +16,8 @@ module top_tb(
 parameter clk_time = 10; //set the clock period
 
 //Todo: Registers and wires
-  reg clk, temperature[4:0], cycle_count;
+  reg clk, temperature[4:0];
+    wires initial_cooling, initial_heating
   
   //Intialise the clock signal
  initial begin 
@@ -25,39 +26,20 @@ parameter clk_time = 10; //set the clock period
    forever
    begin
      #(clk_time/2) clk=~clk;
-    //Increment the counter every clock cycle
-     cycle_count = cycle_count + 1;
    end
   end
   
-  //Apply a forever to evaluate all the different possibilities
-  forever 
-    //If there clock count is 4 exit the program
-    begin 
-      if (cycle_count == 3'd4)
-        $finish;
-      //The case where the temperature is too cold expect a heating
-      else if (cycle_count == 3'd1)
-        begin
-          temperature = 5'd16;
-          $display("Heating %d and Cooling %d,heating,cooling)
-        end
-       //The case where the temperature is within accepted range so expect zeros
-      else if (cycle_count == 3'd2)
-        begin
-          temperature = 5'd21;
-          $display("Heating %d and Cooling %d,heating,cooling)
-        end
-      //The case where the temperature is too hot so expect cooling
-      else if (cycle_count == 3'd3)
-        begin
-          temperature == 5'd24;
-          $display("Heating %d and Cooling %d,heating,cooling)
-        end
-     end 
-                   
-
-  monitor top(.clk(clk), .temperature(temperature), .heating(heating),.cooling(cooling));
+  //Apply a given set of initial conditions
+  initial 
+      begin
+        assign initial_cooling = 1;
+        assign initial_heating = 0;
+        assign temperature = 5'd21;
+      end 
+  initial
+      $display("The temperature is %d and the heating is %d and the cooling is %d",temperature,heating,cooling);
+   
+    monitor top(.clk(clk), .temperature(temperature), .heating(heating),.cooling(cooling),.initiail_heating(initial_heating), .intial_cooling(initial_cooling));
 endmodule
                    
       
