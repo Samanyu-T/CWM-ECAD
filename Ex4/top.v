@@ -20,13 +20,16 @@
 
 module lightcontrol (
     //Todo: add ports 
-	input clk,rst,button,initial_colour,
+	input clk,
+	input rst,
+	input button,
   	output reg [2:0]colour
     );
                     
  
   initial 
-  colour <= initial_colour;
+//Initial Colour
+  colour = 3'b000;
     //Todo: add user logic
   always @(posedge clk)
     begin
@@ -38,9 +41,9 @@ module lightcontrol (
    // if button is on then increase the colour
        if (button == 1)
          colour = colour + 1;
-       else
+     // else
     // if the button is off then keep the colour constant
-         colour = colour;
+   //  colour = colour;
       end
     end
 endmodule
