@@ -37,7 +37,10 @@ parameter clk_time = 10; //set the clock period
 	#50;
       end 
   initial
-      $display("The temperature is %d and the heating is %d and the cooling is %d",temperature,heating,cooling);
+	  begin
+	  if ((heating == 0) && (cooling == 1))
+		  $display("Test Passed");
+	  end
    
     tempmonitor top(.clk(clk), .temperature(temperature), .heating(heating), .cooling(cooling),
 		.initial_heating(initial_heating), .initial_cooling(initial_cooling) );
