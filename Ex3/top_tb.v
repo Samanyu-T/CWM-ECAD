@@ -17,7 +17,7 @@ module top_tb(
 parameter clk_time = 10; //set the clock period
 
 //Todo: Registers and wires
-reg clk, rst, change, on_off, cycle_count ;
+reg clk, rst, change, on_off, [3:0] cycle_count ;
 
 //Todo: Clock generation
 initial begin 
@@ -26,7 +26,7 @@ initial begin
  begin
  #(clk_time/2) clk=~clk;
 //Increment the counter every clock cycle
- cycle_count = cycle_count + 1;
+ cycle_count = cycle_count + 4'h1;
  end
 end
 
