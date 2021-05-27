@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Test bench for Exercise #5 - Air Conditioning
-// Student Name: Jai Ganesha
+// Student Name: 
 // Date: 
 //
 // Description: A testbench module to test Ex5 - Air Conditioning
