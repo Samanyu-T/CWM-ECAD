@@ -15,8 +15,10 @@ module top_tb(
 parameter clk_time = 10; //set the clock period
 
 //Todo: Registers and wires
-  reg clk, temperature[4:0];
-  reg initial_cooling, initial_heating;
+  reg [4:0]temperature;
+  reg clk;
+  reg initial_cooling; 
+  reg initial_heating;
   
   //Intialise the clock signal
  initial 
@@ -31,17 +33,16 @@ parameter clk_time = 10; //set the clock period
   //Apply a given set of initial conditions
   initial 
       begin
-         initial_cooling = 1;
-         initial_heating = 0;
+         initial_cooling = 1'b0;
+         initial_heating = 1'b0;
          temperature = 5'd21;
 	#50;
       end 
-  initial
+// Check whether the solution is correct with the given initial conditions
+   initial
 	  begin
-	  if ((heating == 0) && (cooling == 1))
-		  $display("Test Passed");
+		$display("Heating %d, Cooling %d", heating, cooling);
 	  end
-   
     tempmonitor top(.clk(clk), .temperature(temperature), .heating(heating), .cooling(cooling),
 		.initial_heating(initial_heating), .initial_cooling(initial_cooling) );
 endmodule
