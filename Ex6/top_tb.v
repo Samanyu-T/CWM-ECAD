@@ -7,7 +7,7 @@
 // You need to write the whole file
 //////////////////////////////////////////////////////////////////////////////////
 `timescale 1ns / 100ps
-
+//I am not sure why but the RGB signal is delayed by 1 clock cycle relative to the colour signal
 module top_tb(
     );
     
