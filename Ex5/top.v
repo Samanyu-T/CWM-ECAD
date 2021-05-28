@@ -12,6 +12,8 @@
 //  outputs:
 //           heating, cooling
 //////////////////////////////////////////////////////////////////////////////////
+
+
 module tempmonitor (
     //Todo: add ports 
         input [4:0] temperature,
@@ -24,8 +26,9 @@ module tempmonitor (
     );
 
   //apply the conditions to determine whether cooling or heating is required
- initial
+	always @(posedge clk)
     begin 
+
       heating = initial_heating;
       cooling = initial_cooling;
       //if too cold apply heating
