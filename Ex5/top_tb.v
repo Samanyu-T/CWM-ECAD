@@ -19,32 +19,34 @@ parameter clk_time = 10; //set the clock period
   reg clk;
   reg initial_cooling; 
   reg initial_heating;
-  
+  wire heating;
+  wire cooling;
   //Intialise the clock signal
  initial 
   begin 
-   clk=0;
+
+   clk=1;
+
    forever
    begin
      #(clk_time/2) clk=~clk;
    end
   end
   
-  //Apply a given set of initial conditions
+  //Apply a given set of initial conditions - change these conditions to check if the system works
   initial 
       begin
+
          initial_cooling = 1'b0;
          initial_heating = 1'b0;
-         temperature = 5'd21;
-	#50;
-      end 
+         temperature = 5'd14m;
+
+    	 
 // Check whether the solution is correct with the given initial conditions
-   initial
-	  begin
-		$display("Heating %d, Cooling %d", heating, cooling);
-	  end
-    tempmonitor top(.clk(clk), .temperature(temperature), .heating(heating), .cooling(cooling),
-		.initial_heating(initial_heating), .initial_cooling(initial_cooling) );
+	 #(clk_time) $display("Heating %d, Cooling %d, Temperature %d", heating, cooling, temperature);
+      end 
+      tempmonitor top(.clk(clk), .temperature(temperature), .heating(heating), .cooling(cooling),
+			 .initial_heating(initial_heating), .initial_cooling(initial_cooling) );
 endmodule
                    
       
