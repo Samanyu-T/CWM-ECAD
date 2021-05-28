@@ -21,16 +21,16 @@ reg clk;
 reg rst;
 reg change;
 reg on_off;
-reg [3:0] cycle_count ;
+reg [3:0] cycle_count;
+wire [7:0] counter_out ;
 
 //Todo: Clock generation
 initial begin 
  clk=0;
+ #(clk_time/2)
  forever
  begin
  #(clk_time/2) clk=~clk;
-//Increment the counter every clock cycle
- cycle_count = cycle_count + 4'h1;
  end
 end
 
@@ -41,13 +41,15 @@ initial begin
  change = 1'b1; 
  rst = 1'b0;
  on_off = 1'b1;
- #6
+
+
 forever
 	begin
-	#(clk_time-6)
+	#(clk_time)
+	//Display the values of the counter to check if they match with expectation
 	$display("cycle_count %d and counter %d",cycle_count, counter_out);
-	// increment up to 127 and then back down to 111
-	 if (cycle_count == 4'h5)
+//Change the inputs to check if they work as intended
+	if (cycle_count == 4'h5)
 		 on_off = ~on_off;
 	//Now apply a reset
 	 else if (cycle_count == 4'h8)
@@ -61,22 +63,11 @@ forever
 	//Now test if the value can remain constant
 	 else if (cycle_count == 4'hD)
 		 change = 1'b0;
-	//Display the Counters at each of the critical points
-	 else if (cycle_count == 4'hF) 
-		begin
-		$display("End Result = %d",counter_out);
+	else if (cycle_count == 4'hF)
 		$finish;
-	 	end
-	//Check the intermediary value 1 should be 112
-	 else if (cycle_count == 4'h9)
-		begin 
-		$display("Intermediary value 1 = %d",counter_out);
-		end
-	//Check the intermediary value 2 should be 0
-	 else if (cycle_count == 4'hC)
-		begin
-		$display("Intermediary value 2 = %d",counter_out);
-		end
+	
+	//Increment the counter every clock cycle
+ 	cycle_count = cycle_count + 4'h1;
 	end
 end
 
