@@ -30,7 +30,7 @@ begin
    begin
    #(clk_time/2) clk=~clk;
   //Increment the counter every clock cycle
-   cycle_count = cycle_count + 2'b1;
+   cycle_count = cycle_count + 4'h1;
    end
 end
   
@@ -40,12 +40,10 @@ initial
  colour = 3'b000;
  enable = 1'b1;
  $display("Test colour %d",colour); 
-//Added Delay
  #5
  forever
 	begin
-//Added delay to synchronize to clk cycle		
-		#(clk_time-6)
+	#(clk_time-5)
 //Finish the program if the cycle count exceed the limit
 	if (cycle_count == 4'hF)
 		$finish;
@@ -73,8 +71,11 @@ initial
 		else if ( (colour == 3'b111) && (rgb == 8'hFFFFFF))
 			$display("Test Passed");
 	//Increase the colour by 1 each time to test each case
-		colour = colour + 1'b1;
-		$display("RGB is %h",rgb);
+		if (colour < 3'b111)
+			colour = colour + 3'b001;
+		else
+			colour = 3'b000;
+		$display("cycle %d, colour %b, rgb %b",cycle_count, colour,rgb);
 
 		end	
 	end
