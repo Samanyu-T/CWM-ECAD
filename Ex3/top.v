@@ -16,33 +16,38 @@
 //           counter_out[7:0]
 //////////////////////////////////////////////////////////////////////////////////
 
+`timescale 1ns / 100ps
+
 module monitor (
     //Todo: add ports 
-	input clk,rst,change, on_off,
+	input clk,
+	input rst,
+	input change,
+	input on_off,
 	output reg [7:0]counter_out
     );
-                    
-    //Todo: add registers and wires, if needed
+
 
     //Todo: add user logic
 
+ initial counter_out = 8'h00;
 
+	 
 	always @(posedge clk)
 	begin
 //This if statement will reset to 0 when rst == 1 or when there will be overflow
 //It will also allow the counter to travel from 00 to FF.
-	    if  ( ((counter_out == 8'hFF) && on_off == 1) || (rst) )
- 		counter_out <= 8'h00;
+	    if  ( ((counter_out == 8'hFF) && on_off == 1) || (rst==1) )
+ 		counter_out = 8'h00;
 	    else if ( (counter_out == 8'h00) && (on_off == 0) ) 
-		counter_out <= 8'hFF;
+		counter_out = 8'hFF;
 //add one if the change is on and on_off is on or subtract one if on_off is 0
-	    else if (on_off & change)
-		 counter_out <= counter_out + 1;
-            else if (~on_off & change)
-		 counter_out <= counter_out - 1;
+	    else if ((on_off==1) && (change==1))
+		 counter_out = counter_out + 8'h01;
+            else if ( (on_off==0) & (change==1))
+		 counter_out = counter_out - 8'h01;
 // if change is 0 then the counter remains constant
-	    else
-		counter_out <= counter_out;	    
+	 	    
 	end
 
       
