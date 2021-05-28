@@ -40,10 +40,12 @@ initial
  colour = 3'b000;
  enable = 1'b1;
  $display("Test colour %d",colour); 
-
+//Added Delay
+ #5
  forever
 	begin
-#clk_time
+//Added delay to synchronize to clk cycle		
+		#(clk_time-6)
 //Finish the program if the cycle count exceed the limit
 	if (cycle_count == 4'hF)
 		$finish;
